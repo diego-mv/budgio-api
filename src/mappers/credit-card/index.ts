@@ -1,0 +1,38 @@
+import { generateUid } from '../../infrastructure/id'
+import { Dto, Entities } from '../../models'
+
+export const CreditCard = {
+	entityToDto: (entity: Entities.CreditCard): Dto.CreditCard.CreditCardDto => {
+		return {
+			id: entity.id,
+			creditLimit: entity.creditLimit,
+			dueDate: entity.dueDate,
+			name: entity.name,
+			user: entity.user,
+			color: entity.color,
+			createdAt: entity.createdAt,
+			updatedAt: entity.updatedAt
+		}
+	},
+
+	entitiesToDto: (
+		entities: Entities.CreditCard[]
+	): Dto.CreditCard.CreditCardDto[] => {
+		return entities.map((entity) => CreditCard.entityToDto(entity))
+	},
+
+	createToNewEntity: (
+		dto: Dto.CreditCard.CreateCreditCardDto
+	): Entities.CreditCard => {
+		return {
+			id: generateUid(),
+			creditLimit: dto.creditLimit,
+			dueDate: dto.dueDate,
+			name: dto.name,
+			color: dto.color,
+			createdAt: new Date(),
+			updatedAt: null,
+			userId: dto.userId
+		}
+	}
+}
