@@ -1,12 +1,11 @@
 import { Logger } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import * as dotenv from 'dotenv'
 import { patchNestJsSwagger } from 'nestjs-zod'
 import { AppModule } from './app.module'
-import { WinstonLogger } from './infrastructure/logger/winston.logger'
-import * as dotenv from 'dotenv'
 import { CONSTANTS } from './constants'
-import { GlobalExceptionFilter } from './infrastructure/server/filters/global-exception.filter'
+import { WinstonLogger } from './infrastructure/logger/winston.logger'
 dotenv.config()
 
 async function bootstrap() {
@@ -32,7 +31,7 @@ async function bootstrap() {
 		})
 	}
 
-	app.useGlobalFilters(new GlobalExceptionFilter())
+	// app.useGlobalFilters(new Filters.GlobalExceptionFilter())
 
 	await app.listen(CONSTANTS.ENV.API_PORT ?? 8080, () => {
 		Logger.log(

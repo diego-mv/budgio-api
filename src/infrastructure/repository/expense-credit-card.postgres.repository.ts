@@ -6,10 +6,10 @@ import { Entities } from '../../models'
 
 @Injectable()
 export class ExpenseCreditCardPostgresRepository
-	extends GenericRepository<Entities.ExpenseCreditCard>
+	extends GenericRepository<Entities.IExpenseCreditCard>
 	implements IExpenseCreditCardRepository
 {
-	constructor(repository: Repository<Entities.ExpenseCreditCard>) {
+	constructor(repository: Repository<Entities.IExpenseCreditCard>) {
 		super(repository)
 	}
 }

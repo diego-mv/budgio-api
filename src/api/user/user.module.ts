@@ -1,22 +1,24 @@
 import { Module } from '@nestjs/common'
-import { CreateUserUseCase } from './use-cases/create.uc'
-import { GetUserUseCase } from './use-cases/get.uc'
+import { IoC } from '../../ioc'
 import { UserController } from './user.controller'
-import { DepInject } from '../../dep-inject'
+import { UserService } from './user.service'
 
 @Module({
 	imports: [],
 	controllers: [UserController],
 	providers: [
-		CreateUserUseCase,
-		GetUserUseCase,
+		UserService,
 		{
-			provide: 'UserRepository',
-			useValue: DepInject.Repositories.userPostgresRepository
+			provide: 'CreateUserUseCase',
+			useFactory: IoC.UseCases.User.createUserUseCase
+		},
+		{
+			provide: 'GetUserUseCase',
+			useFactory: IoC.UseCases.User.getUserUseCase
 		},
 		{
 			provide: 'EmailService',
-			useValue: DepInject.Services.emailMailgunService
+			useFactory: IoC.Services.emailMailgunService
 		}
 	]
 })

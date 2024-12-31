@@ -9,50 +9,42 @@ import {
 	UseGuards
 } from '@nestjs/common'
 import { ApiSecurity, ApiTags } from '@nestjs/swagger'
-import { ZodValidationPipe } from 'nestjs-zod'
-import { JwtAuthGuard } from '../../infrastructure/server/guards/jwt-auth.guard'
 import { Dto, Schema } from '../../models'
-import { CreateExpenseUseCase } from './use-cases/create.uc'
-import { DeleteExpenseUseCase } from './use-cases/delete.uc'
-import { GetByUserExpenseUseCase } from './use-cases/get-by-user.uc'
-import { UpdateExpenseUseCase } from './use-cases/update.uc'
-import { User } from '../../infrastructure/server/decorators/current-user.decorator'
+import { Decorators } from '../server/decorators'
+import { Guards } from '../server/guards'
+import { Pipes } from '../server/pipes'
+import { ExpenseService } from './expense.service'
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(Guards.JwtAuthGuard)
 @ApiSecurity('bearer')
 @ApiTags('expense')
 @Controller('expense')
 export class ExpenseController {
-	constructor(
-		private readonly getByUserExpenseUseCase: GetByUserExpenseUseCase,
-		private readonly createExpenseUseCase: CreateExpenseUseCase,
-		private readonly updateExpenseUseCase: UpdateExpenseUseCase,
-		private readonly deleteExpenseUseCase: DeleteExpenseUseCase
-	) {}
+	constructor(private readonly expenseService: ExpenseService) {}
 
 	@Get('by-user')
-	getByUser(@User() user: Dto.User.UserDto) {
-		return this.getByUserExpenseUseCase.execute(user.id)
+	getByUser(@Decorators.User() user: Dto.User.UserDto) {
+		return this.expenseService.getByUserExpense(user.id)
 	}
 
 	@Post()
 	create(
-		@Body(new ZodValidationPipe(Schema.Expense.CreateExpenseSchema))
+		@Body(new Pipes.ZodValidationPipe(Schema.Expense.CreateExpenseSchema))
 		expense: Dto.Expense.CreateExpenseDto
 	) {
-		return this.createExpenseUseCase.execute(expense)
+		return this.expenseService.createExpense(expense)
 	}
 
 	@Put()
 	update(
-		@Body(new ZodValidationPipe(Schema.Expense.UpdateExpenseSchema))
+		@Body(new Pipes.ZodValidationPipe(Schema.Expense.UpdateExpenseSchema))
 		expense: Dto.Expense.UpdateExpenseDto
 	) {
-		return this.updateExpenseUseCase.execute(expense)
+		return this.expenseService.updateExpense(expense)
 	}
 
 	@Delete(':id')
 	delete(@Param('id') id: string) {
-		return this.deleteExpenseUseCase.execute(id)
+		return this.expenseService.deleteExpense(id)
 	}
 }

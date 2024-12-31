@@ -1,14 +1,20 @@
 import { DataSource, DataSourceOptions } from 'typeorm'
-import { WinstonLogger } from '../logger/winston.logger'
 import { CONSTANTS } from '../../constants'
-import { Entities } from '../../models'
+import {
+	CheckingAccount,
+	CreditCard,
+	Expense,
+	ExpenseCreditCard,
+	User
+} from '../entities'
+import { WinstonLogger } from '../logger/winston.logger'
 
 const allEntities = [
-	Entities.User,
-	Entities.CreditCard,
-	Entities.CheckingAccount,
-	Entities.Expense,
-	Entities.ExpenseCreditCard
+	User,
+	CreditCard,
+	CheckingAccount,
+	Expense,
+	ExpenseCreditCard
 ]
 
 export class SingletonConnection {

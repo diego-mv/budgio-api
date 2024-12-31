@@ -13,31 +13,25 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiBody, ApiConsumes, ApiSecurity, ApiTags } from '@nestjs/swagger'
 import { Multer } from 'multer'
-import { ZodValidationPipe } from 'nestjs-zod'
-import { JwtAuthGuard } from '../../infrastructure/server/guards/jwt-auth.guard'
-import { CreateExpenseCreditCardUseCase } from './use-cases/create.uc'
-import { DeleteExpenseCreditCardUseCase } from './use-cases/delete.uc'
-import { ImportExpensesCreditCardUseCase } from './use-cases/import-expenses-credit-card.uc'
-import { UpdateExpenseCreditCardUseCase } from './use-cases/update.uc'
 import { Dto, Schema } from '../../models'
-import { GetByCreditCardExpenseCreditCardUseCase } from './use-cases/get-by-credit-card.uc'
+import { Guards } from '../server/guards'
+import { Pipes } from '../server/pipes'
+import { ExpenseCreditCardService } from './expense-credit-card.service'
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(Guards.JwtAuthGuard)
 @ApiSecurity('bearer')
 @ApiTags('expense-credit-card')
 @Controller('expense-credit-card')
 export class ExpenseCreditCardController {
 	constructor(
-		private readonly getByCreditCardExpenseCreditCardUseCase: GetByCreditCardExpenseCreditCardUseCase,
-		private readonly importExpensesCreditCardUseCase: ImportExpensesCreditCardUseCase,
-		private readonly createExpenseCreditCardUseCase: CreateExpenseCreditCardUseCase,
-		private readonly updateExpenseCreditCardUseCase: UpdateExpenseCreditCardUseCase,
-		private readonly deleteExpenseCreditCardUseCase: DeleteExpenseCreditCardUseCase
+		private readonly expenseCreditCardService: ExpenseCreditCardService
 	) {}
 
 	@Get('/by-credit-card/:creditCardId')
 	getByCreditCard(@Param('creditCardId') creditCardId: string) {
-		return this.getByCreditCardExpenseCreditCardUseCase.execute(creditCardId)
+		return this.expenseCreditCardService.getByCreditCardExpenseCreditCard(
+			creditCardId
+		)
 	}
 
 	@Post('import-expenses/:creditCardId')
@@ -60,7 +54,7 @@ export class ExpenseCreditCardController {
 		@Param('creditCardId') creditCardId: string,
 		@UploadedFile() file: Multer.File
 	) {
-		return this.importExpensesCreditCardUseCase.execute(
+		return this.expenseCreditCardService.importExpensesCreditCard(
 			creditCardId,
 			file.buffer
 		)
@@ -69,29 +63,33 @@ export class ExpenseCreditCardController {
 	@Post()
 	create(
 		@Body(
-			new ZodValidationPipe(
+			new Pipes.ZodValidationPipe(
 				Schema.ExpenseCreditCard.CreateExpenseCreditCardSchema
 			)
 		)
 		expenseCreditCard: Dto.ExpenseCreditCard.CreateExpenseCreditCardDto
 	) {
-		return this.createExpenseCreditCardUseCase.execute(expenseCreditCard)
+		return this.expenseCreditCardService.createExpenseCreditCard(
+			expenseCreditCard
+		)
 	}
 
 	@Put()
 	update(
 		@Body(
-			new ZodValidationPipe(
+			new Pipes.ZodValidationPipe(
 				Schema.ExpenseCreditCard.UpdateExpenseCreditCardSchema
 			)
 		)
 		expenseCreditCard: Dto.ExpenseCreditCard.UpdateExpenseCreditCardDto
 	) {
-		return this.updateExpenseCreditCardUseCase.execute(expenseCreditCard)
+		return this.expenseCreditCardService.updateExpenseCreditCard(
+			expenseCreditCard
+		)
 	}
 
 	@Delete(':id')
 	delete(@Param('id') id: string) {
-		return this.deleteExpenseCreditCardUseCase.execute(id)
+		return this.expenseCreditCardService.deleteExpenseCreditCard(id)
 	}
 }

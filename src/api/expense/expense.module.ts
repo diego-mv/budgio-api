@@ -1,21 +1,27 @@
 import { Module } from '@nestjs/common'
+import { IoC } from '../../ioc'
 import { ExpenseController } from './expense.controller'
-import { GetByUserExpenseUseCase } from './use-cases/get-by-user.uc'
-import { CreateExpenseUseCase } from './use-cases/create.uc'
-import { UpdateExpenseUseCase } from './use-cases/update.uc'
-import { DeleteExpenseUseCase } from './use-cases/delete.uc'
-import { DepInject } from '../../dep-inject'
+import { ExpenseService } from './expense.service'
 
 @Module({
 	controllers: [ExpenseController],
 	providers: [
-		GetByUserExpenseUseCase,
-		CreateExpenseUseCase,
-		UpdateExpenseUseCase,
-		DeleteExpenseUseCase,
+		ExpenseService,
 		{
-			provide: 'ExpenseRepository',
-			useValue: DepInject.Repositories.expensePostgresRepository
+			provide: 'GetByUserExpenseUseCase',
+			useFactory: IoC.UseCases.Expense.getExpenseByUserUseCase
+		},
+		{
+			provide: 'CreateExpenseUseCase',
+			useFactory: IoC.UseCases.Expense.createExpenseUseCase
+		},
+		{
+			provide: 'UpdateExpenseUseCase',
+			useFactory: IoC.UseCases.Expense.updateExpenseUseCase
+		},
+		{
+			provide: 'DeleteExpenseUseCase',
+			useFactory: IoC.UseCases.Expense.deleteExpenseUseCase
 		}
 	]
 })

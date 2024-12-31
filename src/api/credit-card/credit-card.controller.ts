@@ -9,50 +9,42 @@ import {
 	UseGuards
 } from '@nestjs/common'
 import { ApiSecurity, ApiTags } from '@nestjs/swagger'
-import { ZodValidationPipe } from 'nestjs-zod'
-import { User } from '../../infrastructure/server/decorators/current-user.decorator'
-import { JwtAuthGuard } from '../../infrastructure/server/guards/jwt-auth.guard'
-import { CreateCreditCardUseCase } from './use-cases/create.uc'
-import { GetCreditCardByUserUseCase } from './use-cases/get-by-user.uc'
-import { UpdateCreditCardUseCase } from './use-cases/update.uc'
 import { Dto, Schema } from '../../models'
-import { DeleteCreditCardUseCase } from './use-cases/delete.uc'
+import { Decorators } from '../server/decorators'
+import { Guards } from '../server/guards'
+import { Pipes } from '../server/pipes'
+import { CreditCardService } from './credit-card.service'
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(Guards.JwtAuthGuard)
 @ApiSecurity('bearer')
 @ApiTags('credit-card')
 @Controller('credit-card')
 export class CreditCardController {
-	constructor(
-		private readonly getCreditCardByUserUseCase: GetCreditCardByUserUseCase,
-		private readonly createCreditCardUseCase: CreateCreditCardUseCase,
-		private readonly updateCreditCardUseCase: UpdateCreditCardUseCase,
-		private readonly deleteCreditCardUseCase: DeleteCreditCardUseCase
-	) {}
+	constructor(private readonly creditCardService: CreditCardService) {}
 
 	@Get('by-user')
-	getCreditCards(@User() user: Dto.User.UserDto) {
-		return this.getCreditCardByUserUseCase.execute(user.id)
+	getCreditCards(@Decorators.User() user: Dto.User.UserDto) {
+		return this.creditCardService.getCreditCardByUser(user.id)
 	}
 
 	@Post()
 	createCreditCard(
-		@Body(new ZodValidationPipe(Schema.CreditCard.CreateCreditCardSchema))
+		@Body(new Pipes.ZodValidationPipe(Schema.CreditCard.CreateCreditCardSchema))
 		creditCard: Dto.CreditCard.CreateCreditCardDto
 	) {
-		return this.createCreditCardUseCase.execute(creditCard)
+		return this.creditCardService.createCreditCard(creditCard)
 	}
 
 	@Put()
 	updateCreditCard(
-		@Body(new ZodValidationPipe(Schema.CreditCard.UpdateCreditCardSchema))
+		@Body(new Pipes.ZodValidationPipe(Schema.CreditCard.UpdateCreditCardSchema))
 		creditCard: Dto.CreditCard.UpdateCreditCardDto
 	) {
-		return this.updateCreditCardUseCase.execute(creditCard)
+		return this.creditCardService.updateCreditCard(creditCard)
 	}
 
 	@Delete(':id')
 	deleteCreditCard(@Param('id') id: string) {
-		return this.deleteCreditCardUseCase.execute(id)
+		return this.creditCardService.deleteCreditCard(id)
 	}
 }

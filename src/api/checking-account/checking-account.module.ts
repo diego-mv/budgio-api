@@ -1,21 +1,27 @@
 import { Module } from '@nestjs/common'
+import { IoC } from '../../ioc'
 import { CheckingAccountController } from './checking-account.controller'
-import { GetCheckingAccountByUserUseCase } from './use-cases/get-by-user.uc'
-import { DepInject } from '../../dep-inject'
-import { CreateCheckingAccountUseCase } from './use-cases/create.uc'
-import { UpdateCheckingAccountUseCase } from './use-cases/update.uc'
-import { DeleteCheckingAccountUseCase } from './use-cases/delete.uc'
+import { CheckingAccountService } from './checking-account.service'
 
 @Module({
 	controllers: [CheckingAccountController],
 	providers: [
-		GetCheckingAccountByUserUseCase,
-		CreateCheckingAccountUseCase,
-		UpdateCheckingAccountUseCase,
-		DeleteCheckingAccountUseCase,
+		CheckingAccountService,
 		{
-			provide: 'CheckingAccountRepository',
-			useValue: DepInject.Repositories.checkingAccountPostgressRepository
+			provide: 'GetCheckingAccountByUserUseCase',
+			useFactory: IoC.UseCases.CheckingAccount.getCheckingAccountByUserUseCase
+		},
+		{
+			provide: 'CreateCheckingAccountUseCase',
+			useFactory: IoC.UseCases.CheckingAccount.createCheckingAccountUseCase
+		},
+		{
+			provide: 'UpdateCheckingAccountUseCase',
+			useFactory: IoC.UseCases.CheckingAccount.updateCheckingAccountUseCase
+		},
+		{
+			provide: 'DeleteCheckingAccountUseCase',
+			useFactory: IoC.UseCases.CheckingAccount.deleteCheckingAccountUseCase
 		}
 	]
 })

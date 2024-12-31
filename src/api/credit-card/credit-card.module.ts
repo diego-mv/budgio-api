@@ -1,21 +1,27 @@
 import { Module } from '@nestjs/common'
-import { DepInject } from '../../dep-inject'
+import { IoC } from '../../ioc'
 import { CreditCardController } from './credit-card.controller'
-import { CreateCreditCardUseCase } from './use-cases/create.uc'
-import { GetCreditCardByUserUseCase } from './use-cases/get-by-user.uc'
-import { UpdateCreditCardUseCase } from './use-cases/update.uc'
-import { DeleteCreditCardUseCase } from './use-cases/delete.uc'
+import { CreditCardService } from './credit-card.service'
 
 @Module({
 	controllers: [CreditCardController],
 	providers: [
-		CreateCreditCardUseCase,
-		UpdateCreditCardUseCase,
-		GetCreditCardByUserUseCase,
-		DeleteCreditCardUseCase,
+		CreditCardService,
 		{
-			provide: 'CreditCardRepository',
-			useValue: DepInject.Repositories.creditCardPostgresRepository
+			provide: 'GetCreditCardByUserUseCase',
+			useFactory: IoC.UseCases.CreditCard.getCreditCardByUserUseCase
+		},
+		{
+			provide: 'CreateCreditCardUseCase',
+			useFactory: IoC.UseCases.CreditCard.createCreditCardUseCase
+		},
+		{
+			provide: 'UpdateCreditCardUseCase',
+			useFactory: IoC.UseCases.CreditCard.updateCreditCardUseCase
+		},
+		{
+			provide: 'DeleteCreditCardUseCase',
+			useFactory: IoC.UseCases.CreditCard.deleteCreditCardUseCase
 		}
 	]
 })

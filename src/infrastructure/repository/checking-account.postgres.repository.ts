@@ -6,14 +6,14 @@ import { Entities } from '../../models'
 
 @Injectable()
 export class CheckingAccountPostgresRepository
-	extends GenericRepository<Entities.CheckingAccount>
+	extends GenericRepository<Entities.ICheckingAccount>
 	implements ICheckingAccountRepository
 {
-	constructor(repository: Repository<Entities.CheckingAccount>) {
+	constructor(repository: Repository<Entities.ICheckingAccount>) {
 		super(repository)
 	}
 
-	getByUserId = (userId: string): Promise<Entities.CheckingAccount[]> => {
+	getByUserId = (userId: string): Promise<Entities.ICheckingAccount[]> => {
 		return this.repository.find({
 			where: {
 				userId

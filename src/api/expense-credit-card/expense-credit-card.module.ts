@@ -1,28 +1,33 @@
 import { Module } from '@nestjs/common'
-import { DepInject } from '../../dep-inject'
+import { IoC } from '../../ioc'
 import { ExpenseCreditCardController } from './expense-credit-card.controller'
-import { CreateExpenseCreditCardUseCase } from './use-cases/create.uc'
-import { DeleteExpenseCreditCardUseCase } from './use-cases/delete.uc'
-import { ImportExpensesCreditCardUseCase } from './use-cases/import-expenses-credit-card.uc'
-import { UpdateExpenseCreditCardUseCase } from './use-cases/update.uc'
-import { GetByCreditCardExpenseCreditCardUseCase } from './use-cases/get-by-credit-card.uc'
+import { ExpenseCreditCardService } from './expense-credit-card.service'
 
 @Module({
 	controllers: [ExpenseCreditCardController],
 	imports: [],
 	providers: [
-		GetByCreditCardExpenseCreditCardUseCase,
-		ImportExpensesCreditCardUseCase,
-		CreateExpenseCreditCardUseCase,
-		UpdateExpenseCreditCardUseCase,
-		DeleteExpenseCreditCardUseCase,
+		ExpenseCreditCardService,
 		{
-			provide: 'ExpenseCreditCardRepository',
-			useValue: DepInject.Repositories.expenseCreditCardPostgresRepository
+			provide: 'GetByCreditCardExpenseCreditCardUseCase',
+			useFactory:
+				IoC.UseCases.ExpenseCreditCard.getByCreditCardExpenseCreditCardUseCase
 		},
 		{
-			provide: 'CreditCardRepository',
-			useValue: DepInject.Repositories.creditCardPostgresRepository
+			provide: 'ImportExpensesCreditCardUseCase',
+			useFactory: IoC.UseCases.ExpenseCreditCard.importExpensesCreditCardUseCase
+		},
+		{
+			provide: 'CreateExpenseCreditCardUseCase',
+			useFactory: IoC.UseCases.ExpenseCreditCard.createExpenseCreditCardUseCase
+		},
+		{
+			provide: 'UpdateExpenseCreditCardUseCase',
+			useFactory: IoC.UseCases.ExpenseCreditCard.updateExpenseCreditCardUseCase
+		},
+		{
+			provide: 'DeleteExpenseCreditCardUseCase',
+			useFactory: IoC.UseCases.ExpenseCreditCard.deleteExpenseCreditCardUseCase
 		}
 	]
 })

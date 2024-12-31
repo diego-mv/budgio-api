@@ -6,14 +6,14 @@ import { Entities } from '../../models'
 
 @Injectable()
 export class CreditCardPostgresRepository
-	extends GenericRepository<Entities.CreditCard>
+	extends GenericRepository<Entities.ICreditCard>
 	implements ICreditCardRepository
 {
-	constructor(repository: Repository<Entities.CreditCard>) {
+	constructor(repository: Repository<Entities.ICreditCard>) {
 		super(repository)
 	}
 
-	getByUser = async (userId: string): Promise<Entities.CreditCard[]> => {
+	getByUser = async (userId: string): Promise<Entities.ICreditCard[]> => {
 		try {
 			return await this.repository.find({ where: { userId: userId } })
 		} catch (error) {
