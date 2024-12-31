@@ -22,6 +22,16 @@ export class AuthController {
 		return this.authService.callback(req)
 	}
 
+	@Get('google')
+	@UseGuards(AuthGuard('google'))
+	async googleLogin() {}
+
+	@Get('google/callback')
+	@UseGuards(AuthGuard('google'))
+	googleAuthRedirect(@Req() req) {
+		return this.authService.callback(req)
+	}
+
 	@Post('refresh')
 	async refresh(@Body() body: Dto.Auth.RefreshTokenDto) {
 		return this.authService.refreshToken(body)

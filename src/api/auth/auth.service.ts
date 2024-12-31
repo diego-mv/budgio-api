@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { Dto } from '../../models'
 import { IAuthUseCase, IUserUseCase } from '../interfaces'
+import { generateJwtToken, generateRefreshToken } from '../server/jwt'
 
 @Injectable()
 export class AuthService {
@@ -37,5 +38,25 @@ export class AuthService {
 			id: ''
 		}
 		return await this.createUserUseCase.execute(user)
+	}
+
+	strategyAuth = async (
+		email: string,
+		name: string
+	): Promise<Dto.Auth.LoginResponseDto> => {
+		let user = await this.getUserByEmail(email)
+
+		if (!user) {
+			user = await this.createUser(name, email)
+		}
+
+		const jwtAccess = generateJwtToken(user)
+		const jwtRefresh = generateRefreshToken(user)
+
+		return {
+			user: user,
+			accessToken: jwtAccess,
+			refreshToken: jwtRefresh
+		}
 	}
 }

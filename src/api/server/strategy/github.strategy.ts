@@ -5,7 +5,6 @@ import { CONSTANTS } from '../../../constants'
 import { WinstonLogger } from '../../../infrastructure/logger/winston.logger'
 import { Dto, Model } from '../../../models'
 import { AuthService } from '../../auth/auth.service'
-import { generateJwtToken, generateRefreshToken } from '../jwt'
 
 @Injectable()
 export class GitHubStrategy extends PassportStrategy(Strategy, 'github') {
@@ -34,19 +33,6 @@ export class GitHubStrategy extends PassportStrategy(Strategy, 'github') {
 		}
 		const email = emails[0].value
 
-		let user = await this.authService.getUserByEmail(email)
-
-		if (!user) {
-			user = await this.authService.createUser(displayName, email)
-		}
-
-		const jwtAccess = generateJwtToken(user)
-		const jwtRefresh = generateRefreshToken(user)
-
-		return {
-			user: user,
-			accessToken: jwtAccess,
-			refreshToken: jwtRefresh
-		}
+		return await this.authService.strategyAuth(email, displayName)
 	}
 }

@@ -13,6 +13,7 @@ import { AuthService } from './auth.service'
 		Guards.JwtAuthGuard,
 		Strategies.JwtStrategy,
 		Strategies.GitHubStrategy,
+		Strategies.GoogleStrategy,
 		AuthService,
 		{
 			provide: 'RefreshTokenUseCase',
