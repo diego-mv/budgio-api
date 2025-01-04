@@ -3,6 +3,7 @@ import { RefreshTokenUseCase } from './domain/use-cases/auth/refresh-token.uc'
 import { CreateCheckingAccountUseCase } from './domain/use-cases/checking-account/create.uc'
 import { DeleteCheckingAccountUseCase } from './domain/use-cases/checking-account/delete.uc'
 import { GetCheckingAccountByUserUseCase } from './domain/use-cases/checking-account/get-by-user.uc'
+import { UpdateCheckingAccountBalanceUseCase } from './domain/use-cases/checking-account/update-balance.uc'
 import { UpdateCheckingAccountUseCase } from './domain/use-cases/checking-account/update.uc'
 import { CreateCreditCardUseCase } from './domain/use-cases/credit-card/create.uc'
 import { DeleteCreditCardUseCase } from './domain/use-cases/credit-card/delete.uc'
@@ -24,16 +25,18 @@ import { SingletonConnection } from './infrastructure/db/postgress.db'
 import { EmailMailgunService } from './infrastructure/emails/emailMailgun.service'
 import { EmailTemplatesService } from './infrastructure/emails/emailTemplates.service'
 import {
-	CreditCard,
-	User,
 	CheckingAccount,
+	CreditCard,
 	Expense,
-	ExpenseCreditCard
+	ExpenseCreditCard,
+	User
 } from './infrastructure/entities'
+import { HistoryCheckingAccount } from './infrastructure/entities/history-checking-account.entity'
 import { CheckingAccountPostgresRepository } from './infrastructure/repository/checking-account.postgres.repository'
 import { CreditCardPostgresRepository } from './infrastructure/repository/credit-card.postgres.repository'
 import { ExpenseCreditCardPostgresRepository } from './infrastructure/repository/expense-credit-card.postgres.repository'
 import { ExpensePostgresRepository } from './infrastructure/repository/expense.postgres.repository'
+import { HistoryCheckingAccountPostgresRepository } from './infrastructure/repository/history-checking-account.postgres.repository'
 import { UserPostgresRepository } from './infrastructure/repository/user.postgres.repository'
 
 //Connection DB
@@ -55,6 +58,10 @@ export const IoC = {
 		expenseCreditCardRepository: () =>
 			new ExpenseCreditCardPostgresRepository(
 				connection.getRepository(ExpenseCreditCard)
+			),
+		historyCheckingAccountRepository: () =>
+			new HistoryCheckingAccountPostgresRepository(
+				connection.getRepository(HistoryCheckingAccount)
 			)
 	},
 
@@ -104,6 +111,10 @@ export const IoC = {
 				),
 			updateCheckingAccountUseCase: () =>
 				new UpdateCheckingAccountUseCase(
+					IoC.Repositories.checkingAccountRepository()
+				),
+			updateCheckingAccountBalanceUseCase: () =>
+				new UpdateCheckingAccountBalanceUseCase(
 					IoC.Repositories.checkingAccountRepository()
 				),
 			getCheckingAccountByUserUseCase: () =>

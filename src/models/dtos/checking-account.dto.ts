@@ -1,6 +1,7 @@
 import { createZodDto } from 'nestjs-zod'
 import {
 	CreateCheckingAccountSchema,
+	UpdateCheckingAccountBalanceSchema,
 	UpdateCheckingAccountSchema
 } from '../schemas/checking-account.schema'
 import { UserDto } from './user.dto'
@@ -20,4 +21,7 @@ export class CreateCheckingAccountDto extends createZodDto(
 ) {}
 export class UpdateCheckingAccountDto extends createZodDto(
 	UpdateCheckingAccountSchema
+) {}
+export class UpdateCheckingAccountBalanceDto extends createZodDto(
+	UpdateCheckingAccountBalanceSchema
 ) {}

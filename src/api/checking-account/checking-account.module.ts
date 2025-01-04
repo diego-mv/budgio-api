@@ -22,6 +22,11 @@ import { CheckingAccountService } from './checking-account.service'
 		{
 			provide: 'DeleteCheckingAccountUseCase',
 			useFactory: IoC.UseCases.CheckingAccount.deleteCheckingAccountUseCase
+		},
+		{
+			provide: 'UpdateCheckingAccountBalanceUseCase',
+			useFactory:
+				IoC.UseCases.CheckingAccount.updateCheckingAccountBalanceUseCase
 		}
 	]
 })

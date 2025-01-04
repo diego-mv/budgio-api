@@ -16,4 +16,8 @@ export class IExpense {
 	createdAt: Date
 
 	updatedAt: Date | null
+
+	paid: boolean
+	installments: number
+	amount: number
 }

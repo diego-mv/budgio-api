@@ -4,6 +4,7 @@ import { User } from './user.mapper'
 
 export const Expense = {
 	createToNewEntity: (
+		userId: string,
 		expense: Dto.Expense.CreateExpenseDto
 	): Entities.IExpense => {
 		return {
@@ -11,9 +12,12 @@ export const Expense = {
 			name: expense.name,
 			dueDate: expense.dueDate,
 			installmentAmount: expense.installmentAmount,
-			userId: expense.userId,
+			userId,
 			createdAt: new Date(),
-			updatedAt: new Date()
+			updatedAt: new Date(),
+			paid: expense.paid,
+			amount: expense.amount,
+			installments: expense.installments
 		}
 	},
 
@@ -25,19 +29,25 @@ export const Expense = {
 			installmentAmount: expense.installmentAmount,
 			user: User.entityToDto(expense.user),
 			createdAt: expense.createdAt,
-			updatedAt: expense.updatedAt
+			updatedAt: expense.updatedAt,
+			paid: expense.paid,
+			amount: expense.amount,
+			installments: expense.installments
 		}
 	},
 
-	dtoToEntity: (expense: Dto.Expense.CreateExpenseDto): Entities.IExpense => {
+	dtoToEntity: (expense: Dto.Expense.ExpenseDto): Entities.IExpense => {
 		return {
 			id: generateUid(),
 			name: expense.name,
 			dueDate: expense.dueDate,
 			installmentAmount: expense.installmentAmount,
-			userId: expense.userId,
+			userId: expense.user.id,
 			createdAt: new Date(),
-			updatedAt: new Date()
+			updatedAt: new Date(),
+			paid: expense.paid,
+			installments: expense.installments,
+			amount: expense.amount
 		}
 	},
 

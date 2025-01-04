@@ -1,16 +1,32 @@
 import { Injectable } from '@nestjs/common'
-import { Dto } from '../../../models'
+import { Response } from 'express'
 import { IAuthUseCase } from '../../../api/interfaces'
+import { CONSTANTS } from '../../../constants'
 
 @Injectable()
 export class CallbackUseCase implements IAuthUseCase.ICallbackUseCase {
-	async execute(
-		req: Dto.Auth.LoginResponseDto
-	): Promise<Dto.Auth.LoginResponseDto> {
-		return {
-			user: req.user,
-			accessToken: req.accessToken,
-			refreshToken: req.refreshToken
+	async execute(req: any, res: Response): Promise<void> {
+		const data = {
+			user: req.user.user,
+			accessToken: req.user.accessToken,
+			refreshToken: req.user.refreshToken
 		}
+		res.cookie('access_token', data.accessToken, {
+			httpOnly: false,
+			secure: false,
+			sameSite: 'lax'
+		})
+		res.cookie('refresh_token', data.refreshToken, {
+			httpOnly: false,
+			secure: false,
+			sameSite: 'lax'
+		})
+		res.cookie('user', JSON.stringify(data.user), {
+			httpOnly: false,
+			secure: false,
+			sameSite: 'lax'
+		})
+
+		return res.redirect(`${CONSTANTS.ENV.CLIENT_HOST}/auth/callback`)
 	}
 }

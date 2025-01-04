@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common'
+import {
+	Body,
+	Controller,
+	Get,
+	Post,
+	Req,
+	Res,
+	UseGuards
+} from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { ApiTags } from '@nestjs/swagger'
 import { WinstonLogger } from '../../infrastructure/logger/winston.logger'
@@ -18,8 +26,8 @@ export class AuthController {
 
 	@Get('github/callback')
 	@UseGuards(AuthGuard('github'))
-	githubLoginCallback(@Req() req) {
-		return this.authService.callback(req)
+	githubLoginCallback(@Req() req, @Res() res) {
+		return this.authService.callback(req, res)
 	}
 
 	@Get('google')
@@ -28,8 +36,8 @@ export class AuthController {
 
 	@Get('google/callback')
 	@UseGuards(AuthGuard('google'))
-	googleAuthRedirect(@Req() req) {
-		return this.authService.callback(req)
+	googleAuthRedirect(@Req() req, @Res() res) {
+		return this.authService.callback(req, res)
 	}
 
 	@Post('refresh')

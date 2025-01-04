@@ -23,16 +23,21 @@ export class ExpenseController {
 	constructor(private readonly expenseService: ExpenseService) {}
 
 	@Get('by-user')
-	getByUser(@Decorators.User() user: Dto.User.UserDto) {
-		return this.expenseService.getByUserExpense(user.id)
+	getByUser(
+		@Decorators.User() user: Dto.User.UserDto,
+		@Param('page') page?: number,
+		@Param('pageSize') pageSize?: number
+	) {
+		return this.expenseService.getByUserExpense(user.id, page, pageSize)
 	}
 
 	@Post()
 	create(
+		@Decorators.User() user: Dto.User.UserDto,
 		@Body(new Pipes.ZodValidationPipe(Schema.Expense.CreateExpenseSchema))
 		expense: Dto.Expense.CreateExpenseDto
 	) {
-		return this.expenseService.createExpense(expense)
+		return this.expenseService.createExpense(user.id, expense)
 	}
 
 	@Put()

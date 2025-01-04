@@ -15,8 +15,14 @@ export class Expense implements IExpense {
 	@PrimaryColumn({ length: 64, name: 'Id' })
 	id: string
 
-	@Column({ type: 'numeric', name: 'InstallmentAmount' })
+	@Column({ type: 'numeric', name: 'Installments' })
 	installmentAmount: number
+
+	@Column({ type: 'numeric', name: 'InstallmentAmount' })
+	installments: number
+
+	@Column({ type: 'numeric', name: 'Amount' })
+	amount: number
 
 	@Column({ length: 64, name: 'Name' })
 	name: string
@@ -36,4 +42,7 @@ export class Expense implements IExpense {
 
 	@UpdateDateColumn({ type: 'timestamptz', nullable: true, name: 'UpdatedAt' })
 	updatedAt: Date | null
+
+	@Column({ type: 'boolean', name: 'Paid' })
+	paid: boolean
 }

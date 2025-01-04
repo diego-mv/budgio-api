@@ -1,9 +1,8 @@
+import { Response } from 'express'
 import { Dto } from '../../../models'
 
 export interface ICallbackUseCase {
-	execute: (
-		req: Dto.Auth.LoginResponseDto
-	) => Promise<Dto.Auth.LoginResponseDto>
+	execute: (req: any, response: Response) => Promise<void>
 }
 
 export interface IRefreshTokenUseCase {

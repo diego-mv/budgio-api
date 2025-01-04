@@ -13,6 +13,9 @@ export class ExpenseDto {
 	user: UserDto
 	createdAt: Date
 	updatedAt: Date | null
+	paid: boolean
+	installments: number
+	amount: number
 }
 
 export class CreateExpenseDto extends createZodDto(CreateExpenseSchema) {}

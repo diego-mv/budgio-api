@@ -18,7 +18,8 @@ CREATE TABLE "Expense" (
     "DueDate" DATE NOT NULL,
     "UserId" VARCHAR(64) NOT NULL REFERENCES "User"("Id"),
     "CreatedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "UpdatedAt" TIMESTAMP WITH TIME ZONE
+    "UpdatedAt" TIMESTAMP WITH TIME ZONE,
+    "Paid" BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE "CheckingAccount" (
@@ -30,6 +31,16 @@ CREATE TABLE "CheckingAccount" (
     "CreatedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "UpdatedAt" TIMESTAMP WITH TIME ZONE
 );
+
+CREATE TABLE "HistoryCheckingAccount" (
+    "Id" VARCHAR(64) PRIMARY KEY,
+    "CheckingAccountId" VARCHAR(64) NOT NULL,
+    "Balance" NUMERIC NOT NULL,
+    "Date" TIMESTAMP NOT NULL,
+    "Description" TEXT,
+    FOREIGN KEY ("CheckingAccountId") REFERENCES "CheckingAccount"("Id")
+);
+
 
 CREATE TABLE "CreditCard" (
     "Id" VARCHAR(64) PRIMARY KEY,

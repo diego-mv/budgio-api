@@ -14,9 +14,10 @@ export class CreateExpenseUseCase
 	) {}
 
 	execute = async (
+		userId: string,
 		expense: Dto.Expense.CreateExpenseDto
 	): Promise<Dto.Expense.ExpenseDto> => {
-		const expenseEntity = Mappers.Expense.createToNewEntity(expense)
+		const expenseEntity = Mappers.Expense.createToNewEntity(userId, expense)
 		const createdExpense = await this.expenseRepository.create(expenseEntity)
 
 		return Mappers.Expense.entityToDto(createdExpense)

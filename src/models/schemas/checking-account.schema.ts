@@ -13,3 +13,7 @@ export const UpdateCheckingAccountSchema = z.object({
 	balance: z.number().min(0),
 	color: z.string()
 })
+
+export const UpdateCheckingAccountBalanceSchema = z.object({
+	balance: z.number().min(0)
+})

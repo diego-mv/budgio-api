@@ -6,15 +6,18 @@ import { patchNestJsSwagger } from 'nestjs-zod'
 import { AppModule } from './app.module'
 import { CONSTANTS } from './constants'
 import { WinstonLogger } from './infrastructure/logger/winston.logger'
+import * as cookieParser from 'cookie-parser'
 dotenv.config()
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule, {
 		logger: new WinstonLogger(),
 		cors: {
-			origin: '*'
+			origin: CONSTANTS.ENV.CLIENT_HOST,
+			credentials: true
 		}
 	})
+	app.use(cookieParser())
 	const enableSwagger = CONSTANTS.ENV.ENABLE_SWAGGER
 	if (enableSwagger) {
 		patchNestJsSwagger()

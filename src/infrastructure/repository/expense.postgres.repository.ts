@@ -12,4 +12,21 @@ export class ExpensePostgresRepository
 	constructor(repository: Repository<Entities.IExpense>) {
 		super(repository)
 	}
+
+	getByUserPaginated = async (
+		userId: string,
+		page: number,
+		pageSize: number
+	): Promise<{ items: Entities.IExpense[]; total: number }> => {
+		const [items, total] = await this.repository.findAndCount({
+			where: { userId },
+			skip: (page - 1) * pageSize,
+			take: pageSize
+		})
+
+		return {
+			items,
+			total
+		}
+	}
 }

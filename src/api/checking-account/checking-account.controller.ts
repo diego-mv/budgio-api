@@ -41,6 +41,22 @@ export class CheckingAccountController {
 		return this.checkingAccountService.createCheckingAccount(checkingAccount)
 	}
 
+	@Put('/update-balance/:id')
+	updateBalance(
+		@Param('id') id: string,
+		@Body(
+			new Pipes.ZodValidationPipe(
+				Schema.CheckingAccount.UpdateCheckingAccountBalanceSchema
+			)
+		)
+		checkingAccount: Dto.CheckingAccount.UpdateCheckingAccountBalanceDto
+	) {
+		return this.checkingAccountService.updateCheckingAccountBalance(
+			id,
+			checkingAccount
+		)
+	}
+
 	@Put()
 	update(
 		@Body(

@@ -13,9 +13,23 @@ export class GetByUserExpenseUseCase
 		private readonly expenseRepository: IExpenseRepository
 	) {}
 
-	execute = async (userId: string): Promise<Dto.Expense.ExpenseDto[]> => {
-		const expenses = await this.expenseRepository.get({ userId })
+	execute = async (
+		userId: string,
+		page: number = 1,
+		pageSize: number = 10
+	): Promise<Dto.PaginatedData<Dto.Expense.ExpenseDto>> => {
+		const { items, total } = await this.expenseRepository.getByUserPaginated(
+			userId,
+			page,
+			pageSize
+		)
+		const expenses = Mappers.Expense.entitiesToDto(items)
 
-		return Mappers.Expense.entitiesToDto(expenses)
+		return {
+			data: expenses,
+			total,
+			page,
+			pageSize
+		}
 	}
 }

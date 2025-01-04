@@ -21,6 +21,7 @@ export class UpdateExpenseUseCase
 		currentExpense.name = expense.name
 		currentExpense.installmentAmount = expense.installmentAmount
 		currentExpense.dueDate = expense.dueDate
+		currentExpense.paid = expense.paid
 
 		await this.expenseRepository.update(currentExpense)
 

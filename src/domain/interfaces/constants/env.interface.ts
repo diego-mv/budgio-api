@@ -17,4 +17,5 @@ export interface IEnvConfig {
 	GOOGLE_CLIENT_ID: string
 	GOOGLE_CLIENT_SECRET: string
 	GOOGLE_CALLBACK_URL: string
+	CLIENT_HOST: string
 }

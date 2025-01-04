@@ -12,7 +12,9 @@ export class CheckingAccountService {
 		@Inject('UpdateCheckingAccountUseCase')
 		private readonly updateCheckingAccountUseCase: ICheckingAccountUseCase.IUpdateCheckingAccountUseCase,
 		@Inject('DeleteCheckingAccountUseCase')
-		private readonly deleteCheckingAccountUseCase: ICheckingAccountUseCase.IDeleteCheckingAccountUseCase
+		private readonly deleteCheckingAccountUseCase: ICheckingAccountUseCase.IDeleteCheckingAccountUseCase,
+		@Inject('UpdateCheckingAccountBalanceUseCase')
+		private readonly updateCheckingAccountBalanceUseCase: ICheckingAccountUseCase.IUpdateCheckingAccountBalanceUseCase
 	) {}
 
 	getCheckingAccountsByUser = async (id: string) => {
@@ -33,5 +35,15 @@ export class CheckingAccountService {
 
 	deleteCheckingAccount = async (id: string) => {
 		return await this.deleteCheckingAccountUseCase.execute(id)
+	}
+
+	updateCheckingAccountBalance = async (
+		chekingAccountId: string,
+		checkingAccount: Dto.CheckingAccount.UpdateCheckingAccountBalanceDto
+	) => {
+		return await this.updateCheckingAccountBalanceUseCase.execute(
+			chekingAccountId,
+			checkingAccount
+		)
 	}
 }

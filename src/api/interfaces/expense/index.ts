@@ -2,6 +2,7 @@ import { Dto } from '../../../models'
 
 export interface ICreateExpenseUseCase {
 	execute(
+		userId: string,
 		expense: Dto.Expense.CreateExpenseDto
 	): Promise<Dto.Expense.ExpenseDto>
 }
@@ -17,5 +18,9 @@ export interface IDeleteExpenseUseCase {
 }
 
 export interface IGetByUserExpenseUseCase {
-	execute(userId: string): Promise<Dto.Expense.ExpenseDto[]>
+	execute(
+		userId: string,
+		page?: number,
+		pageSize?: number
+	): Promise<Dto.PaginatedData<Dto.Expense.ExpenseDto>>
 }

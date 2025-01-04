@@ -1,5 +1,0 @@
-export { CheckingAccount } from './checking-account.entity'
-export { CreditCard } from './credit-card.entity'
-export { ExpenseCreditCard } from './expense-credit-card.entity'
-export { Expense } from './expense.entity'
-export { User } from './user.entity'

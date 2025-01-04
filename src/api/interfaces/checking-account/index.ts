@@ -12,6 +12,13 @@ export interface IUpdateCheckingAccountUseCase {
 	) => Promise<Dto.CheckingAccount.CheckingAccountDto>
 }
 
+export interface IUpdateCheckingAccountBalanceUseCase {
+	execute: (
+		checkingAccountId: string,
+		checkingAccount: Dto.CheckingAccount.UpdateCheckingAccountBalanceDto
+	) => Promise<Dto.CheckingAccount.CheckingAccountDto>
+}
+
 export interface IDeleteCheckingAccountUseCase {
 	execute: (checkingAccountId: string) => Promise<void>
 }

@@ -15,12 +15,15 @@ export class ExpenseService {
 		private readonly deleteExpenseUseCase: IExpenseUseCase.IDeleteExpenseUseCase
 	) {}
 
-	getByUserExpense = async (userId: string) => {
-		return this.getByUserExpenseUseCase.execute(userId)
+	getByUserExpense = async (userId: string, page: number, pageSize: number) => {
+		return this.getByUserExpenseUseCase.execute(userId, page, pageSize)
 	}
 
-	createExpense = async (expense: Dto.Expense.CreateExpenseDto) => {
-		return this.createExpenseUseCase.execute(expense)
+	createExpense = async (
+		userId: string,
+		expense: Dto.Expense.CreateExpenseDto
+	) => {
+		return this.createExpenseUseCase.execute(userId, expense)
 	}
 
 	updateExpense = async (expense: Dto.Expense.UpdateExpenseDto) => {

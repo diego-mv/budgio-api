@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common'
 import { Dto } from '../../models'
 import { IAuthUseCase, IUserUseCase } from '../interfaces'
 import { generateJwtToken, generateRefreshToken } from '../server/jwt'
+import { Response } from 'express'
 
 @Injectable()
 export class AuthService {
@@ -20,8 +21,8 @@ export class AuthService {
 		return await this.refreshTokenUseCase.execute(dto.refreshToken)
 	}
 
-	callback = async (request: any) => {
-		return await this.callbackUseCase.execute(request)
+	callback = async (request: any, response: Response) => {
+		return await this.callbackUseCase.execute(request, response)
 	}
 
 	getUserByEmail = async (email: string) => {
