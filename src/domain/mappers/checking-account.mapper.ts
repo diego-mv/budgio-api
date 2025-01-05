@@ -32,6 +32,7 @@ export const CheckingAccount = {
 	},
 
 	createToNewEntity: (
+		userId: string,
 		createCheckingAccountDto: Dto.CheckingAccount.CreateCheckingAccountDto
 	): Entities.ICheckingAccount => {
 		return {
@@ -39,7 +40,7 @@ export const CheckingAccount = {
 			balance: createCheckingAccountDto.balance,
 			color: createCheckingAccountDto.color,
 			name: createCheckingAccountDto.name,
-			userId: createCheckingAccountDto.userId,
+			userId,
 			createdAt: new Date(),
 			updatedAt: null
 		}

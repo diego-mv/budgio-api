@@ -7,6 +7,7 @@ import { ExpenseCreditCardModule } from './api/expense-credit-card/expense-credi
 import { ExpenseModule } from './api/expense/expense.module'
 import { UserModule } from './api/user/user.module'
 import { WinstonLogger } from './infrastructure/logger/winston.logger'
+import { HistoryCheckingAccountModule } from './api/history-checking-account/history-checking-account.module'
 
 @Module({
 	imports: [
@@ -16,7 +17,8 @@ import { WinstonLogger } from './infrastructure/logger/winston.logger'
 		ExpenseCreditCardModule,
 		ExpenseModule,
 		UserModule,
-		AuthModule
+		AuthModule,
+		HistoryCheckingAccountModule
 	],
 	controllers: [],
 	providers: [

@@ -22,9 +22,13 @@ export class CheckingAccountService {
 	}
 
 	createCheckingAccount = async (
+		userId: string,
 		checkingAccount: Dto.CheckingAccount.CreateCheckingAccountDto
 	) => {
-		return await this.createCheckingAccountUseCase.execute(checkingAccount)
+		return await this.createCheckingAccountUseCase.execute(
+			userId,
+			checkingAccount
+		)
 	}
 
 	updateCheckingAccount = async (

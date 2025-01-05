@@ -4,6 +4,7 @@ import { Dto } from '../../../models'
 import { HttpErrorByCode } from '@nestjs/common/utils/http-error-by-code.util'
 import { Mappers } from '../../mappers'
 import { ICheckingAccountUseCase } from '../../../api/interfaces'
+import { HistoryCheckingAccountService } from '../../services/history-checking-account.service'
 
 @Injectable()
 export class UpdateCheckingAccountBalanceUseCase
@@ -11,7 +12,8 @@ export class UpdateCheckingAccountBalanceUseCase
 {
 	constructor(
 		@Inject('CheckingAccountRepository')
-		private readonly checkingAccountRepository: ICheckingAccountRepository
+		private readonly checkingAccountRepository: ICheckingAccountRepository,
+		private readonly historyCheckingAccountService: HistoryCheckingAccountService
 	) {}
 
 	execute = async (
@@ -29,6 +31,12 @@ export class UpdateCheckingAccountBalanceUseCase
 
 		const updated = await this.checkingAccountRepository.update(
 			currentCheckingAccount
+		)
+
+		await this.historyCheckingAccountService.create(
+			checkingAccountId,
+			checkingAccount.balance,
+			checkingAccount.description
 		)
 
 		return Mappers.CheckingAccount.entityToDto(updated)

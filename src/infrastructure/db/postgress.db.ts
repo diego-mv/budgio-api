@@ -5,7 +5,8 @@ import {
 	CreditCard,
 	Expense,
 	ExpenseCreditCard,
-	User
+	User,
+	HistoryCheckingAccount
 } from '../entities'
 import { WinstonLogger } from '../logger/winston.logger'
 
@@ -14,7 +15,8 @@ const allEntities = [
 	CreditCard,
 	CheckingAccount,
 	Expense,
-	ExpenseCreditCard
+	ExpenseCreditCard,
+	HistoryCheckingAccount
 ]
 
 export class SingletonConnection {

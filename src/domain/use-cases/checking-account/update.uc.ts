@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common'
-import { ICheckingAccountRepository } from '../../interfaces/repositories/checking-account.repository'
-import { Dto } from '../../../models'
 import { HttpErrorByCode } from '@nestjs/common/utils/http-error-by-code.util'
-import { Mappers } from '../../mappers'
 import { ICheckingAccountUseCase } from '../../../api/interfaces'
+import { Dto } from '../../../models'
+import { ICheckingAccountRepository } from '../../interfaces/repositories/checking-account.repository'
+import { Mappers } from '../../mappers'
 
 @Injectable()
 export class UpdateCheckingAccountUseCase
@@ -26,7 +26,6 @@ export class UpdateCheckingAccountUseCase
 		}
 
 		currentCheckingAccount.name = checkingAccount.name
-		currentCheckingAccount.balance = checkingAccount.balance
 		currentCheckingAccount.color = checkingAccount.color
 		currentCheckingAccount.updatedAt = new Date()
 

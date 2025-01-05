@@ -1,3 +1,4 @@
+import { HistoryCheckingAccountService } from './domain/services/history-checking-account.service'
 import { CallbackUseCase } from './domain/use-cases/auth/callback.uc'
 import { RefreshTokenUseCase } from './domain/use-cases/auth/refresh-token.uc'
 import { CreateCheckingAccountUseCase } from './domain/use-cases/checking-account/create.uc'
@@ -18,6 +19,9 @@ import { DeleteExpenseCreditCardUseCase } from './domain/use-cases/exponse-credi
 import { GetByCreditCardExpenseCreditCardUseCase } from './domain/use-cases/exponse-credit-card/get-by-credit-card.uc'
 import { ImportExpensesCreditCardUseCase } from './domain/use-cases/exponse-credit-card/import-expenses-credit-card.uc'
 import { UpdateExpenseCreditCardUseCase } from './domain/use-cases/exponse-credit-card/update.uc'
+import { GetHistoryByCheckingAccountUseCase } from './domain/use-cases/history-checking-account/get-by-checking-account.uc'
+import { GetLastEntryCheckingAccountUseCase } from './domain/use-cases/history-checking-account/get-last-entry.uc'
+import { GetLastExpenseCheckingAccountUseCase } from './domain/use-cases/history-checking-account/get-last-expense.uc'
 import { CreateUserUseCase } from './domain/use-cases/user/create.uc'
 import { GetUserByEmailUseCase } from './domain/use-cases/user/get-by-email.uc'
 import { GetUserUseCase } from './domain/use-cases/user/get.uc'
@@ -69,7 +73,11 @@ export const IoC = {
 	Services: {
 		emailMailgunService: () => new EmailMailgunService(),
 		emailTemplatesService: () =>
-			new EmailTemplatesService(IoC.Services.emailMailgunService())
+			new EmailTemplatesService(IoC.Services.emailMailgunService()),
+		historyCheckingAccountService: () =>
+			new HistoryCheckingAccountService(
+				IoC.Repositories.historyCheckingAccountRepository()
+			)
 	},
 
 	// Use cases
@@ -103,7 +111,8 @@ export const IoC = {
 		CheckingAccount: {
 			createCheckingAccountUseCase: () =>
 				new CreateCheckingAccountUseCase(
-					IoC.Repositories.checkingAccountRepository()
+					IoC.Repositories.checkingAccountRepository(),
+					IoC.Services.historyCheckingAccountService()
 				),
 			deleteCheckingAccountUseCase: () =>
 				new DeleteCheckingAccountUseCase(
@@ -115,7 +124,8 @@ export const IoC = {
 				),
 			updateCheckingAccountBalanceUseCase: () =>
 				new UpdateCheckingAccountBalanceUseCase(
-					IoC.Repositories.checkingAccountRepository()
+					IoC.Repositories.checkingAccountRepository(),
+					IoC.Services.historyCheckingAccountService()
 				),
 			getCheckingAccountByUserUseCase: () =>
 				new GetCheckingAccountByUserUseCase(
@@ -154,6 +164,20 @@ export const IoC = {
 				new ImportExpensesCreditCardUseCase(
 					IoC.Repositories.creditCardRepository(),
 					IoC.Repositories.expenseCreditCardRepository()
+				)
+		},
+		HistoryCheckingAccount: {
+			getHistoryByCheckingAccountUseCase: () =>
+				new GetHistoryByCheckingAccountUseCase(
+					IoC.Repositories.historyCheckingAccountRepository()
+				),
+			getLastExpenseUseCase: () =>
+				new GetLastExpenseCheckingAccountUseCase(
+					IoC.Repositories.historyCheckingAccountRepository()
+				),
+			getLastEntryUseCase: () =>
+				new GetLastEntryCheckingAccountUseCase(
+					IoC.Repositories.historyCheckingAccountRepository()
 				)
 		}
 	}

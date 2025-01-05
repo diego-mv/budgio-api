@@ -2,6 +2,7 @@ import { Dto } from '../../../models'
 
 export interface ICreateCheckingAccountUseCase {
 	execute: (
+		userId: string,
 		checkingAccount: Dto.CheckingAccount.CreateCheckingAccountDto
 	) => Promise<Dto.CheckingAccount.CheckingAccountDto>
 }

@@ -31,6 +31,7 @@ export class CheckingAccountController {
 
 	@Post()
 	create(
+		@Decorators.User() user: Dto.User.UserDto,
 		@Body(
 			new Pipes.ZodValidationPipe(
 				Schema.CheckingAccount.CreateCheckingAccountSchema
@@ -38,7 +39,10 @@ export class CheckingAccountController {
 		)
 		checkingAccount: Dto.CheckingAccount.CreateCheckingAccountDto
 	) {
-		return this.checkingAccountService.createCheckingAccount(checkingAccount)
+		return this.checkingAccountService.createCheckingAccount(
+			user.id,
+			checkingAccount
+		)
 	}
 
 	@Put('/update-balance/:id')

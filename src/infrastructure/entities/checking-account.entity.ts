@@ -4,11 +4,13 @@ import {
 	Entity,
 	JoinColumn,
 	ManyToOne,
+	OneToMany,
 	PrimaryColumn,
 	UpdateDateColumn
 } from 'typeorm'
 import { ICheckingAccount } from '../../models/entities/checking-account.entity'
 import { User } from './user.entity'
+import { HistoryCheckingAccount } from './history-checking-account.entity'
 
 @Entity('CheckingAccount')
 export class CheckingAccount implements ICheckingAccount {
@@ -36,4 +38,11 @@ export class CheckingAccount implements ICheckingAccount {
 
 	@UpdateDateColumn({ type: 'timestamptz', nullable: true, name: 'UpdatedAt' })
 	updatedAt: Date | null
+
+	@OneToMany(
+		() => HistoryCheckingAccount,
+		(history) => history.checkingAccountId,
+		{ cascade: true }
+	)
+	history?: HistoryCheckingAccount[]
 }
