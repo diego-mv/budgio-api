@@ -27,7 +27,21 @@ export class UpdateCheckingAccountBalanceUseCase
 			throw new HttpErrorByCode[404]('Checking account not found')
 		}
 
-		currentCheckingAccount.balance = checkingAccount.balance
+		let newBalance = Number(currentCheckingAccount.balance)
+
+		switch (checkingAccount.type) {
+			case 'balance':
+			default:
+				newBalance = Number(checkingAccount.amount)
+				break
+			case 'expense':
+				newBalance -= Number(checkingAccount.amount)
+				break
+			case 'income':
+				newBalance += Number(checkingAccount.amount)
+				break
+		}
+		currentCheckingAccount.balance = newBalance
 
 		const updated = await this.checkingAccountRepository.update(
 			currentCheckingAccount
@@ -35,7 +49,7 @@ export class UpdateCheckingAccountBalanceUseCase
 
 		await this.historyCheckingAccountService.create(
 			checkingAccountId,
-			checkingAccount.balance,
+			newBalance,
 			checkingAccount.description
 		)
 

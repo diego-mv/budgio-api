@@ -13,6 +13,7 @@ export const UpdateCheckingAccountSchema = z.object({
 })
 
 export const UpdateCheckingAccountBalanceSchema = z.object({
-	balance: z.number().min(0),
+	amount: z.number().min(0),
+	type: z.enum(['balance', 'expense', 'income']),
 	description: z.string().optional().nullable()
 })
