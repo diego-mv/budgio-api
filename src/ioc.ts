@@ -20,7 +20,7 @@ import { GetByCreditCardExpenseCreditCardUseCase } from './domain/use-cases/expo
 import { ImportExpensesCreditCardUseCase } from './domain/use-cases/exponse-credit-card/import-expenses-credit-card.uc'
 import { UpdateExpenseCreditCardUseCase } from './domain/use-cases/exponse-credit-card/update.uc'
 import { GetHistoryByCheckingAccountUseCase } from './domain/use-cases/history-checking-account/get-by-checking-account.uc'
-import { GetLastEntryCheckingAccountUseCase } from './domain/use-cases/history-checking-account/get-last-entry.uc'
+import { GetLastIncomeCheckingAccountUseCase } from './domain/use-cases/history-checking-account/get-last-income.uc'
 import { GetLastExpenseCheckingAccountUseCase } from './domain/use-cases/history-checking-account/get-last-expense.uc'
 import { CreateUserUseCase } from './domain/use-cases/user/create.uc'
 import { GetUserByEmailUseCase } from './domain/use-cases/user/get-by-email.uc'
@@ -175,8 +175,8 @@ export const IoC = {
 				new GetLastExpenseCheckingAccountUseCase(
 					IoC.Repositories.historyCheckingAccountRepository()
 				),
-			getLastEntryUseCase: () =>
-				new GetLastEntryCheckingAccountUseCase(
+			getLastIncomeUseCase: () =>
+				new GetLastIncomeCheckingAccountUseCase(
 					IoC.Repositories.historyCheckingAccountRepository()
 				)
 		}

@@ -13,7 +13,7 @@ export class HistoryCheckingAccountPostgresRepository
 		super(repository)
 	}
 
-	getLastEntry = async (
+	getLastIncome = async (
 		checkingAccountId: string
 	): Promise<{ date?: Date; value: number }> => {
 		const result = await this.repository.find({

@@ -4,8 +4,8 @@ import { Dto } from '../../../models'
 import { IHistoryCheckingAccountRepository } from '../../interfaces/repositories/history-checking-account.repository'
 
 @Injectable()
-export class GetLastEntryCheckingAccountUseCase
-	implements IHistoryCheckingAccountUseCase.IGetLastEntryUseCase
+export class GetLastIncomeCheckingAccountUseCase
+	implements IHistoryCheckingAccountUseCase.IGetIncomeUseCase
 {
 	constructor(
 		@Inject('HistoryCheckingAccountRepository')
@@ -15,13 +15,13 @@ export class GetLastEntryCheckingAccountUseCase
 	execute = async (
 		checkingAccountId: string
 	): Promise<Dto.HistoryCheckingAccount.BalanceDifferenceDto | null> => {
-		const lastEntry =
-			await this.historyCheckingAccountRepository.getLastEntry(
+		const lastIncome =
+			await this.historyCheckingAccountRepository.getLastIncome(
 				checkingAccountId
 			)
 		return {
-			date: lastEntry.date,
-			difference: lastEntry.value
+			date: lastIncome.date,
+			difference: lastIncome.value
 		}
 	}
 }

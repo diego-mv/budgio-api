@@ -6,8 +6,8 @@ export class HistoryCheckingAccountService {
 	constructor(
 		@Inject('GetHistoryByCheckingAccountUseCase')
 		private readonly getHistoryByCheckingAccountUseCase: IHistoryCheckingAccountUseCase.IGetHistoryByCheckingAccountUseCase,
-		@Inject('GetLastEntryCheckingAccountUseCase')
-		private readonly getLastEntryUseCase: IHistoryCheckingAccountUseCase.IGetLastEntryUseCase,
+		@Inject('GetLastIncomeCheckingAccountUseCase')
+		private readonly getLastIncomeUseCase: IHistoryCheckingAccountUseCase.IGetIncomeUseCase,
 		@Inject('GetLastExpenseCheckingAcccountUseCase')
 		private readonly getLastExpenseUseCase: IHistoryCheckingAccountUseCase.IGetLastExpenseUseCase
 	) {}
@@ -23,7 +23,7 @@ export class HistoryCheckingAccountService {
 		return expense
 	}
 
-	getLastEntry = async (checkingAccountId: string) => {
-		return await this.getLastEntryUseCase.execute(checkingAccountId)
+	getLastIncome = async (checkingAccountId: string) => {
+		return await this.getLastIncomeUseCase.execute(checkingAccountId)
 	}
 }

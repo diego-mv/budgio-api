@@ -19,9 +19,9 @@ export class HistoryCheckingAccountController {
 		)
 	}
 
-	@Get('/last-entry/:checkingAccountId')
-	getLastEntry(@Param('checkingAccountId') checkingAccountId: string) {
-		return this.historyCheckingAccountService.getLastEntry(checkingAccountId)
+	@Get('/last-income/:checkingAccountId')
+	getLastIncome(@Param('checkingAccountId') checkingAccountId: string) {
+		return this.historyCheckingAccountService.getLastIncome(checkingAccountId)
 	}
 
 	@Get('/last-expense/:checkingAccountId')

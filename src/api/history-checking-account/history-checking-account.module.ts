@@ -18,8 +18,8 @@ import { IoC } from '../../ioc'
 			useFactory: IoC.UseCases.HistoryCheckingAccount.getLastExpenseUseCase
 		},
 		{
-			provide: 'GetLastEntryCheckingAccountUseCase',
-			useFactory: IoC.UseCases.HistoryCheckingAccount.getLastEntryUseCase
+			provide: 'GetLastIncomeCheckingAccountUseCase',
+			useFactory: IoC.UseCases.HistoryCheckingAccount.getLastIncomeUseCase
 		}
 	]
 })

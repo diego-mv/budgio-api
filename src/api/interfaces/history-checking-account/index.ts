@@ -6,7 +6,7 @@ export interface IGetHistoryByCheckingAccountUseCase {
 	) => Promise<Dto.HistoryCheckingAccount.HistoryCheckingAccountDto[]>
 }
 
-export interface IGetLastEntryUseCase {
+export interface IGetIncomeUseCase {
 	execute: (
 		checkingAccountId: string
 	) => Promise<Dto.HistoryCheckingAccount.BalanceDifferenceDto>
