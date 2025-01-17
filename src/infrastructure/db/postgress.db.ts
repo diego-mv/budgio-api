@@ -39,6 +39,9 @@ export class SingletonConnection {
 		synchronize: false,
 		extra: {
 			timezone: 'UTC'
+		},
+		ssl: {
+			rejectUnauthorized: false
 		}
 	}
 
@@ -61,6 +64,10 @@ export class SingletonConnection {
 		if (!SingletonConnection.dataSource) {
 			SingletonConnection.dataSource = new DataSource(
 				SingletonConnection.dataConfig
+			)
+
+			logger.log(
+				`Host: ${CONSTANTS.ENV.DATABASE_HOST} - Port: ${CONSTANTS.ENV.DATABASE_PORT}`
 			)
 
 			SingletonConnection.dataSource
