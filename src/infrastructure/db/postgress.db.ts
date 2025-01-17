@@ -33,7 +33,8 @@ export class SingletonConnection {
 		port: Number(CONSTANTS.ENV.DATABASE_PORT || 5432),
 		username: String(CONSTANTS.ENV.DATABASE_USER),
 		password: String(CONSTANTS.ENV.DATABASE_PASSWORD),
-		database: String(CONSTANTS.ENV.DATABASE_NAME),
+		database: 'postgres',
+		schema: String(CONSTANTS.ENV.DATABASE_NAME),
 		entities: allEntities,
 		synchronize: false,
 		extra: {
