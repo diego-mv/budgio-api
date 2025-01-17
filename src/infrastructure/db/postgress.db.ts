@@ -52,7 +52,10 @@ export class SingletonConnection {
 			password: String(CONSTANTS.ENV.DATABASE_PASSWORD),
 			database: String(CONSTANTS.ENV.DATABASE_NAME),
 			entities: allEntities,
-			synchronize: false
+			synchronize: false,
+			ssl: {
+				rejectUnauthorized: false
+			}
 		}
 
 		if (!SingletonConnection.dataSource) {
