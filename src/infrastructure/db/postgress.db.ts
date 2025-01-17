@@ -29,7 +29,7 @@ export class SingletonConnection {
 
 	private static dataConfig: DataSourceOptions = {
 		type: 'postgres',
-		url: `postgres://${CONSTANTS.ENV.DATABASE_USER}:${CONSTANTS.ENV.DATABASE_PASSWORD}@${CONSTANTS.ENV.DATABASE_HOST}:${CONSTANTS.ENV.DATABASE_PORT || 5432}/${CONSTANTS.ENV.DATABASE_NAME}`,
+		url: `postgres://${CONSTANTS.ENV.DATABASE_USER}:${CONSTANTS.ENV.DATABASE_PASSWORD}@${CONSTANTS.ENV.DATABASE_HOST}:${CONSTANTS.ENV.DATABASE_PORT || 5432}/${CONSTANTS.ENV.DATABASE_NAME}?pgbouncer=true`,
 		entities: allEntities,
 		synchronize: false,
 		extra: {
@@ -44,7 +44,7 @@ export class SingletonConnection {
 		const logger = new WinstonLogger()
 		SingletonConnection.dataConfig = {
 			type: 'postgres',
-			url: `postgres://${CONSTANTS.ENV.DATABASE_USER}:${CONSTANTS.ENV.DATABASE_PASSWORD}@${CONSTANTS.ENV.DATABASE_HOST}:${CONSTANTS.ENV.DATABASE_PORT || 5432}/${CONSTANTS.ENV.DATABASE_NAME}`,
+			url: `postgres://${CONSTANTS.ENV.DATABASE_USER}:${CONSTANTS.ENV.DATABASE_PASSWORD}@${CONSTANTS.ENV.DATABASE_HOST}:${CONSTANTS.ENV.DATABASE_PORT || 5432}/${CONSTANTS.ENV.DATABASE_NAME}?pgbouncer=true`,
 			entities: allEntities,
 			synchronize: false,
 			extra: {
@@ -70,7 +70,7 @@ export class SingletonConnection {
 				.catch((err) => {
 					logger.error(
 						'🗄️❌ Error during PostgreSQL connection initialization! ❌🗄️',
-						`postgres://${CONSTANTS.ENV.DATABASE_USER}:PASSWORD@${CONSTANTS.ENV.DATABASE_HOST}:${CONSTANTS.ENV.DATABASE_PORT || 5432}/${CONSTANTS.ENV.DATABASE_NAME}`
+						err as string
 					)
 				})
 		}
