@@ -29,12 +29,7 @@ export class SingletonConnection {
 
 	private static dataConfig: DataSourceOptions = {
 		type: 'postgres',
-		host: CONSTANTS.ENV.DATABASE_HOST,
-		port: 5432,
-		username: String(CONSTANTS.ENV.DATABASE_USER),
-		password: String(CONSTANTS.ENV.DATABASE_PASSWORD),
-		database: 'postgres',
-		schema: String(CONSTANTS.ENV.DATABASE_NAME),
+		url: `postgres://${CONSTANTS.ENV.DATABASE_USER}:${CONSTANTS.ENV.DATABASE_PASSWORD}@${CONSTANTS.ENV.DATABASE_HOST}:${CONSTANTS.ENV.DATABASE_PORT || 5432}/${CONSTANTS.ENV.DATABASE_NAME}`,
 		entities: allEntities,
 		synchronize: false,
 		extra: {
@@ -49,13 +44,12 @@ export class SingletonConnection {
 		const logger = new WinstonLogger()
 		SingletonConnection.dataConfig = {
 			type: 'postgres',
-			host: CONSTANTS.ENV.DATABASE_HOST,
-			port: Number(CONSTANTS.ENV.DATABASE_PORT || 5432),
-			username: String(CONSTANTS.ENV.DATABASE_USER),
-			password: String(CONSTANTS.ENV.DATABASE_PASSWORD),
-			database: String(CONSTANTS.ENV.DATABASE_NAME),
+			url: `postgres://${CONSTANTS.ENV.DATABASE_USER}:${CONSTANTS.ENV.DATABASE_PASSWORD}@${CONSTANTS.ENV.DATABASE_HOST}:${CONSTANTS.ENV.DATABASE_PORT || 5432}/${CONSTANTS.ENV.DATABASE_NAME}`,
 			entities: allEntities,
 			synchronize: false,
+			extra: {
+				timezone: 'UTC'
+			},
 			ssl: {
 				rejectUnauthorized: false
 			}
@@ -64,10 +58,6 @@ export class SingletonConnection {
 		if (!SingletonConnection.dataSource) {
 			SingletonConnection.dataSource = new DataSource(
 				SingletonConnection.dataConfig
-			)
-
-			logger.log(
-				`Host: ${CONSTANTS.ENV.DATABASE_HOST} - Port: ${CONSTANTS.ENV.DATABASE_PORT}`
 			)
 
 			SingletonConnection.dataSource
@@ -80,7 +70,10 @@ export class SingletonConnection {
 				.catch((err) => {
 					logger.error(
 						'🗄️❌ Error during PostgreSQL connection initialization! ❌🗄️',
-						err
+						{
+							...err,
+							url: `postgres://${CONSTANTS.ENV.DATABASE_USER}:PASSWORD@${CONSTANTS.ENV.DATABASE_HOST}:${CONSTANTS.ENV.DATABASE_PORT || 5432}/${CONSTANTS.ENV.DATABASE_NAME}`
+						}
 					)
 				})
 		}
