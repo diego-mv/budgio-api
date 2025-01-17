@@ -30,7 +30,7 @@ export class SingletonConnection {
 	private static dataConfig: DataSourceOptions = {
 		type: 'postgres',
 		host: CONSTANTS.ENV.DATABASE_HOST,
-		port: Number(CONSTANTS.ENV.DATABASE_PORT || 5432),
+		port: 5432,
 		username: String(CONSTANTS.ENV.DATABASE_USER),
 		password: String(CONSTANTS.ENV.DATABASE_PASSWORD),
 		database: 'postgres',
