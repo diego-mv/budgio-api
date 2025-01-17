@@ -13,9 +13,9 @@ export class GetUserByEmailUseCase
 		private readonly userRepository: IUserRepository
 	) {}
 
-	execute = async (email: string): Promise<Dto.User.UserDto> => {
+	execute = async (email: string): Promise<Dto.User.UserDto | undefined> => {
 		const user = await this.userRepository.getByEmail(email)
 
-		return Mappers.User.entityToDto(user)
+		return user ? Mappers.User.entityToDto(user) : undefined
 	}
 }

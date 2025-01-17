@@ -18,6 +18,7 @@ export class GetCheckingAccountByUserUseCase
 		const checkingAccounts = await this.checkingAccountRepository.get({
 			userId
 		})
+		console.log(checkingAccounts)
 
 		return Mappers.CheckingAccount.entitiesToDto(checkingAccounts)
 	}

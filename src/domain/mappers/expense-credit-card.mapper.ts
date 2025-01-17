@@ -13,11 +13,12 @@ export const ExpenseCreditCard = {
 			creditCardId: creditCardId,
 			installmentAmount: expenseImported.installmentAmount,
 			issueDate: parseISO(expenseImported.date),
-			name: expenseImported.description,
+			name: expenseImported.description.replaceAll('*', ''),
 			totalCost: expenseImported.amount,
 			totalInstallments: Number(
 				Number(
-					expenseImported.amount / expenseImported.installmentAmount
+					Number(expenseImported.amount) /
+						Number(expenseImported.installmentAmount)
 				).toFixed(0)
 			),
 			createdAt: new Date(),

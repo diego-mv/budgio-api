@@ -2,6 +2,7 @@ import { Dto } from '../../../models'
 
 export interface ICreateCreditCardUseCase {
 	execute(
+		userId: string,
 		creditCard: Dto.CreditCard.CreateCreditCardDto
 	): Promise<Dto.CreditCard.CreditCardDto>
 }

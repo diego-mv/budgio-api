@@ -19,8 +19,11 @@ export class CreditCardService {
 		return await this.getCreditCardByUserUseCase.execute(id)
 	}
 
-	createCreditCard = async (creditCard: Dto.CreditCard.CreateCreditCardDto) => {
-		return await this.createCreditCardUseCase.execute(creditCard)
+	createCreditCard = async (
+		userId: string,
+		creditCard: Dto.CreditCard.CreateCreditCardDto
+	) => {
+		return await this.createCreditCardUseCase.execute(userId, creditCard)
 	}
 
 	updateCreditCard = async (creditCard: Dto.CreditCard.UpdateCreditCardDto) => {

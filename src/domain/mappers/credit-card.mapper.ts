@@ -22,6 +22,7 @@ export const CreditCard = {
 	},
 
 	createToNewEntity: (
+		userId: string,
 		dto: Dto.CreditCard.CreateCreditCardDto
 	): Entities.ICreditCard => {
 		return {
@@ -32,7 +33,7 @@ export const CreditCard = {
 			color: dto.color,
 			createdAt: new Date(),
 			updatedAt: null,
-			userId: dto.userId
+			userId: userId
 		}
 	}
 }

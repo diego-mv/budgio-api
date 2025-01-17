@@ -17,7 +17,7 @@ export interface IGetByCreditCardExpenseCreditCardUseCase {
 }
 
 export interface IImportExpensesCreditCardUseCase {
-	execute: (creditCardId: string, buffer: Buffer) => Promise<void>
+	execute: (creditCardId: string, buffer: Buffer) => Promise<{ status: string }>
 }
 
 export interface IUpdateExpenseCreditCardUseCase {

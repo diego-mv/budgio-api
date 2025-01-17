@@ -1,6 +1,5 @@
 import { LoggerService } from '@nestjs/common'
 import { createLogger, format, Logger, transports } from 'winston'
-import * as DailyRotateFile from 'winston-daily-rotate-file'
 import { CONSTANTS } from '../../constants'
 
 export class WinstonLogger implements LoggerService {
@@ -17,18 +16,18 @@ export class WinstonLogger implements LoggerService {
 				)
 			),
 			transports: [
-				new transports.Console(),
-				new DailyRotateFile({
-					filename: 'logs/%DATE%-error.log',
-					datePattern: 'YYYY-MM-DD',
-					level: 'error',
-					format: format.combine(
-						format.timestamp(),
-						format.printf(({ timestamp, level, message }) => {
-							return `${timestamp} ${level}: ${message}`
-						})
-					)
-				})
+				new transports.Console()
+				// new DailyRotateFile({
+				// 	filename: 'logs/%DATE%-error.log',
+				// 	datePattern: 'YYYY-MM-DD',
+				// 	level: 'error',
+				// 	format: format.combine(
+				// 		format.timestamp(),
+				// 		format.printf(({ timestamp, level, message }) => {
+				// 			return `${timestamp} ${level}: ${message}`
+				// 		})
+				// 	)
+				// })
 			]
 		})
 	}

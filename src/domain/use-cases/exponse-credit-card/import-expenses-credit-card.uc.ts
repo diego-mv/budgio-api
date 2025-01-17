@@ -30,24 +30,22 @@ export class ImportExpensesCreditCardUseCase
 			throw new Error('Credit card not found')
 		}
 
-		const data =
-			await ExcelHandler.readExcel<Dto.CreditCard.CreditCardImportDto>(
-				buffer,
-				this.headersDtoMap
-			)
+		let data = await ExcelHandler.readExcel<Dto.CreditCard.CreditCardImportDto>(
+			buffer,
+			this.headersDtoMap
+		)
+		data = data.filter((expense) => Number(expense.installmentAmount) > 0)
 
 		const allExpenses = await this.expenseCreditCardRepository.get({
 			creditCardId
 		})
 		const newExpenses: Entities.IExpenseCreditCard[] = []
-
 		for (const expense of data) {
 			const exist = this.existExpense(allExpenses, expense)
 
 			if (exist) {
 				continue
 			}
-
 			const newExpense: Entities.IExpenseCreditCard =
 				Mappers.ExpenseCreditCard.importedToEntity(creditCardId, expense)
 
@@ -55,6 +53,8 @@ export class ImportExpensesCreditCardUseCase
 		}
 
 		await this.expenseCreditCardRepository.createMany(newExpenses)
+
+		return { status: 'success' }
 	}
 
 	private headersDtoMap: {
@@ -72,14 +72,23 @@ export class ImportExpensesCreditCardUseCase
 		allExpenses: Entities.IExpenseCreditCard[],
 		expense: Dto.CreditCard.CreditCardImportDto
 	): Entities.IExpenseCreditCard | undefined {
-		return allExpenses.find(
-			(e) =>
-				e.name === expense.description &&
+		return allExpenses.find((e) => {
+			console.log(`${e.name.toLocaleLowerCase().trim()} =
+			${expense.description.toLocaleLowerCase().trim().replaceAll('*', '')} &&
+				// isSameDay(e.issueDate, parseISO(expense.date)) &&
+				${e.totalCost.toString()} == ${expense.amount.toString()} &&
+				${e.installmentAmount.toString()} == ${expense.installmentAmount.toString()}`)
+			return (
+				e.name.trim().replace(/\s+/g, '').toLocaleLowerCase() ===
+					expense.description
+						.trim()
+						.replaceAll(/\s+/g, '')
+						.replaceAll('*', '')
+						.toLocaleLowerCase() &&
 				isSameDay(e.issueDate, parseISO(expense.date)) &&
-				e.totalCost === expense.amount &&
-				e.installmentAmount === expense.installmentAmount &&
-				e.totalInstallments ===
-					Number(Number(expense.amount / expense.installmentAmount).toFixed(0))
-		)
+				e.totalCost.toString() == expense.amount.toString() &&
+				e.installmentAmount.toString() == expense.installmentAmount.toString()
+			)
+		})
 	}
 }

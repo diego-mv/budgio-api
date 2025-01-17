@@ -29,10 +29,11 @@ export class CreditCardController {
 
 	@Post()
 	createCreditCard(
+		@Decorators.User() user: Dto.User.UserDto,
 		@Body(new Pipes.ZodValidationPipe(Schema.CreditCard.CreateCreditCardSchema))
 		creditCard: Dto.CreditCard.CreateCreditCardDto
 	) {
-		return this.creditCardService.createCreditCard(creditCard)
+		return this.creditCardService.createCreditCard(user.id, creditCard)
 	}
 
 	@Put()

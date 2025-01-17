@@ -14,9 +14,13 @@ export class CreateCreditCardUseCase
 	) {}
 
 	execute = async (
+		userId: string,
 		creditCard: Dto.CreditCard.CreateCreditCardDto
 	): Promise<Dto.CreditCard.CreditCardDto> => {
-		const creditCardEntity = Mappers.CreditCard.createToNewEntity(creditCard)
+		const creditCardEntity = Mappers.CreditCard.createToNewEntity(
+			userId,
+			creditCard
+		)
 		const created = await this.creditCardRepository.create(creditCardEntity)
 
 		return Mappers.CreditCard.entityToDto(created)

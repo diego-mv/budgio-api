@@ -7,8 +7,7 @@ export const CreateCreditCardSchema = z.object({
 		.default(new Date().toISOString())
 		.transform((value) => new Date(value)),
 	name: z.string(),
-	color: z.string(),
-	userId: z.string()
+	color: z.string()
 })
 
 export const UpdateCreditCardSchema = z.object({
