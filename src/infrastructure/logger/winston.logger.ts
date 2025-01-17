@@ -15,20 +15,7 @@ export class WinstonLogger implements LoggerService {
 					(info) => `${info.timestamp} ${info.level}: ${info.message}`
 				)
 			),
-			transports: [
-				new transports.Console()
-				// new DailyRotateFile({
-				// 	filename: 'logs/%DATE%-error.log',
-				// 	datePattern: 'YYYY-MM-DD',
-				// 	level: 'error',
-				// 	format: format.combine(
-				// 		format.timestamp(),
-				// 		format.printf(({ timestamp, level, message }) => {
-				// 			return `${timestamp} ${level}: ${message}`
-				// 		})
-				// 	)
-				// })
-			]
+			transports: [new transports.Console()]
 		})
 	}
 
