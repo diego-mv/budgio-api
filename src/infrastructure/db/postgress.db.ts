@@ -70,10 +70,7 @@ export class SingletonConnection {
 				.catch((err) => {
 					logger.error(
 						'🗄️❌ Error during PostgreSQL connection initialization! ❌🗄️',
-						{
-							...err,
-							url: `postgres://${CONSTANTS.ENV.DATABASE_USER}:PASSWORD@${CONSTANTS.ENV.DATABASE_HOST}:${CONSTANTS.ENV.DATABASE_PORT || 5432}/${CONSTANTS.ENV.DATABASE_NAME}`
-						}
+						`postgres://${CONSTANTS.ENV.DATABASE_USER}:PASSWORD@${CONSTANTS.ENV.DATABASE_HOST}:${CONSTANTS.ENV.DATABASE_PORT || 5432}/${CONSTANTS.ENV.DATABASE_NAME}`
 					)
 				})
 		}
