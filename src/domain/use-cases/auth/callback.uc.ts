@@ -15,19 +15,19 @@ export class CallbackUseCase implements IAuthUseCase.ICallbackUseCase {
 			httpOnly: false,
 			secure: true,
 			sameSite: 'none',
-			domain: CONSTANTS.ENV.CLIENT_HOST.split('//')[1]
+			domain: '.onrender.com'
 		})
 		res.cookie('refresh_token', data.refreshToken, {
 			httpOnly: false,
 			secure: true,
 			sameSite: 'none',
-			domain: CONSTANTS.ENV.CLIENT_HOST.split('//')[1]
+			domain: '.onrender.com'
 		})
 		res.cookie('user', JSON.stringify(data.user), {
 			httpOnly: false,
 			secure: true,
 			sameSite: 'none',
-			domain: CONSTANTS.ENV.CLIENT_HOST.split('//')[1]
+			domain: '.onrender.com'
 		})
 
 		return res.redirect(`${CONSTANTS.ENV.CLIENT_HOST}/auth/callback`)
