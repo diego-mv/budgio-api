@@ -14,20 +14,17 @@ export class CallbackUseCase implements IAuthUseCase.ICallbackUseCase {
 		res.cookie('access_token', data.accessToken, {
 			httpOnly: false,
 			secure: true,
-			sameSite: 'none',
-			domain: CONSTANTS.ENV.CLIENT_HOST
+			sameSite: 'none'
 		})
 		res.cookie('refresh_token', data.refreshToken, {
 			httpOnly: false,
 			secure: true,
-			sameSite: 'none',
-			domain: CONSTANTS.ENV.CLIENT_HOST
+			sameSite: 'none'
 		})
 		res.cookie('user', JSON.stringify(data.user), {
 			httpOnly: false,
 			secure: true,
-			sameSite: 'none',
-			domain: CONSTANTS.ENV.CLIENT_HOST
+			sameSite: 'none'
 		})
 
 		return res.redirect(`${CONSTANTS.ENV.CLIENT_HOST}/auth/callback`)
