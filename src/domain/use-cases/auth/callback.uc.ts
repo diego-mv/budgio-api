@@ -12,22 +12,31 @@ export class CallbackUseCase implements IAuthUseCase.ICallbackUseCase {
 			refreshToken: req.user.refreshToken
 		}
 		res.cookie('access_token', data.accessToken, {
-			httpOnly: false,
+			httpOnly: true,
 			secure: true,
 			sameSite: 'none',
-			domain: '.onrender.com'
+			signed: true,
+			domain: '.onrender.com',
+			maxAge: 1000 * 60 * 60,
+			expires: new Date(Date.now() + 1000 * 60 * 60)
 		})
 		res.cookie('refresh_token', data.refreshToken, {
-			httpOnly: false,
+			httpOnly: true,
 			secure: true,
 			sameSite: 'none',
-			domain: '.onrender.com'
+			signed: true,
+			domain: '.onrender.com',
+			maxAge: 1000 * 60 * 60,
+			expires: new Date(Date.now() + 1000 * 60 * 60)
 		})
 		res.cookie('user', JSON.stringify(data.user), {
-			httpOnly: false,
+			httpOnly: true,
 			secure: true,
 			sameSite: 'none',
-			domain: '.onrender.com'
+			signed: true,
+			domain: '.onrender.com',
+			maxAge: 1000 * 60 * 60,
+			expires: new Date(Date.now() + 1000 * 60 * 60)
 		})
 
 		return res.redirect(`${CONSTANTS.ENV.CLIENT_HOST}/auth/callback`)
