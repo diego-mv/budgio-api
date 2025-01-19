@@ -16,7 +16,6 @@ export class CallbackUseCase implements IAuthUseCase.ICallbackUseCase {
 			secure: true,
 			sameSite: 'none',
 			signed: true,
-			domain: '.onrender.com',
 			maxAge: 1000 * 60 * 60,
 			expires: new Date(Date.now() + 1000 * 60 * 60)
 		})
@@ -25,7 +24,6 @@ export class CallbackUseCase implements IAuthUseCase.ICallbackUseCase {
 			secure: true,
 			sameSite: 'none',
 			signed: true,
-			domain: '.onrender.com',
 			maxAge: 1000 * 60 * 60,
 			expires: new Date(Date.now() + 1000 * 60 * 60)
 		})
@@ -34,7 +32,6 @@ export class CallbackUseCase implements IAuthUseCase.ICallbackUseCase {
 			secure: true,
 			sameSite: 'none',
 			signed: true,
-			domain: '.onrender.com',
 			maxAge: 1000 * 60 * 60,
 			expires: new Date(Date.now() + 1000 * 60 * 60)
 		})
