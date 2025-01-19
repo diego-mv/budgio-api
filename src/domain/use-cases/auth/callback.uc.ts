@@ -11,31 +11,8 @@ export class CallbackUseCase implements IAuthUseCase.ICallbackUseCase {
 			accessToken: req.user.accessToken,
 			refreshToken: req.user.refreshToken
 		}
-		res.cookie('access_token', data.accessToken, {
-			httpOnly: false,
-			secure: true,
-			sameSite: 'none',
-			signed: true,
-			maxAge: 1000 * 60 * 60,
-			expires: new Date(Date.now() + 1000 * 60 * 60)
-		})
-		res.cookie('refresh_token', data.refreshToken, {
-			httpOnly: false,
-			secure: true,
-			sameSite: 'none',
-			signed: true,
-			maxAge: 1000 * 60 * 60,
-			expires: new Date(Date.now() + 1000 * 60 * 60)
-		})
-		res.cookie('user', JSON.stringify(data.user), {
-			httpOnly: false,
-			secure: true,
-			sameSite: 'none',
-			signed: true,
-			maxAge: 1000 * 60 * 60,
-			expires: new Date(Date.now() + 1000 * 60 * 60)
-		})
+		const redirectUrl = `${CONSTANTS.ENV.CLIENT_HOST}/auth/callback?access_token=${encodeURIComponent(data.accessToken)}&refresh_token=${encodeURIComponent(data.refreshToken)}`
 
-		return res.redirect(`${CONSTANTS.ENV.CLIENT_HOST}/auth/callback`)
+		return res.redirect(redirectUrl)
 	}
 }
