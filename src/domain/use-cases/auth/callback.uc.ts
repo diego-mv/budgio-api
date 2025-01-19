@@ -12,7 +12,7 @@ export class CallbackUseCase implements IAuthUseCase.ICallbackUseCase {
 			refreshToken: req.user.refreshToken
 		}
 		res.cookie('access_token', data.accessToken, {
-			httpOnly: true,
+			httpOnly: false,
 			secure: true,
 			sameSite: 'none',
 			signed: true,
@@ -21,7 +21,7 @@ export class CallbackUseCase implements IAuthUseCase.ICallbackUseCase {
 			expires: new Date(Date.now() + 1000 * 60 * 60)
 		})
 		res.cookie('refresh_token', data.refreshToken, {
-			httpOnly: true,
+			httpOnly: false,
 			secure: true,
 			sameSite: 'none',
 			signed: true,
@@ -30,7 +30,7 @@ export class CallbackUseCase implements IAuthUseCase.ICallbackUseCase {
 			expires: new Date(Date.now() + 1000 * 60 * 60)
 		})
 		res.cookie('user', JSON.stringify(data.user), {
-			httpOnly: true,
+			httpOnly: false,
 			secure: true,
 			sameSite: 'none',
 			signed: true,

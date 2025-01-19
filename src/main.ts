@@ -17,7 +17,8 @@ async function bootstrap() {
 			credentials: true
 		}
 	})
-	app.use(cookieParser())
+	app.use(cookieParser(CONSTANTS.ENV.COOKIE_SECRET))
+
 	const enableSwagger = CONSTANTS.ENV.ENABLE_SWAGGER
 	if (enableSwagger) {
 		patchNestJsSwagger()
